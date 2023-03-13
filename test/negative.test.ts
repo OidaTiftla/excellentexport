@@ -20,41 +20,14 @@ describe("convert() API", function () {
       const options = {
         anchor: "anchor",
         filename: "data_from_array",
-        format: "csv",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {},
-        },
-        {
-          name: "Sheet Number 2",
-          from: {},
-        },
-      ];
+      const sheet = {
+        from: {},
+      };
 
       assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
-      }, Error);
-    });
-
-    it("should fail if sheet does not have name", function () {
-      const options = {
-        anchor: "anchor",
-        filename: "data_from_array",
-        format: "csv",
-      } as ConvertOptions;
-
-      const sheets = [
-        {
-          // name: 'Sheet Name Here 1',
-          from: {},
-        },
-      ] as SheetOptions[];
-
-      assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
+        ExcellentExport.convert(options, sheet);
       }, Error);
     });
 
@@ -62,37 +35,14 @@ describe("convert() API", function () {
       const options = {
         anchor: "anchor",
         filename: "data_from_array",
-        format: "csv",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          // from: {}
-        },
-      ] as SheetOptions[];
+      const sheet = {
+        // from: {}
+      } as SheetOptions;
 
       assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
-      }, Error);
-    });
-
-    it("should fail if there is not format defined", function () {
-      const options = {
-        anchor: "anchor",
-        filename: "data_from_array",
-        //format: 'csv'
-      } as ConvertOptions;
-
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {},
-        },
-      ];
-
-      assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
+        ExcellentExport.convert(options, sheet);
       }, Error);
     });
 
@@ -100,36 +50,28 @@ describe("convert() API", function () {
       const options = {
         anchor: "anchor1235d5d5d5d_invalid",
         filename: "data_from_array",
-        format: "csv",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {},
-        },
-      ];
+      const sheet = {
+        from: {},
+      };
 
       assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
+        ExcellentExport.convert(options, sheet);
       }, Error);
     });
 
     it("should fail if no anchor and not openAsDownload", function () {
       const options = {
         filename: "data_from_array",
-        format: "csv",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {},
-        },
-      ];
+      const sheet = {
+        from: {},
+      };
 
       assert.throws(() => {
-        ExcellentExport.convert(options, sheets);
+        ExcellentExport.convert(options, sheet);
       }, Error);
     });
   });

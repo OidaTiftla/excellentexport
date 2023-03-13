@@ -29,11 +29,6 @@ export const b64toBlob = function (
   });
 };
 
-export const templates = {
-  excel:
-    '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta name=ProgId content=Excel.Sheet> <meta name=Generator content="Microsoft Excel 11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-};
-
 /**
  * Convert a string to Base64.
  */
@@ -113,20 +108,18 @@ export const tableToArray = function (table: HTMLTableElement): any[][] {
   return tableInfo;
 };
 
-export const tableToCSV = function (
-  table: HTMLTableElement,
+export const arrayToCSV = function (
+  rows: any[][],
   csvDelimiter: string = ",",
   csvNewLine: string = "\n"
 ): string {
   let data = "";
-  for (let i = 0; i < table.rows.length; i = i + 1) {
-    const row = table.rows[i];
-    for (let j = 0; j < row.cells.length; j = j + 1) {
-      const col = row.cells[j];
+  for (let i = 0; i < rows.length; i = i + 1) {
+    const row = rows[i];
+    for (let j = 0; j < row.length; j = j + 1) {
+      const col = row[j];
       data =
-        data +
-        (j ? csvDelimiter : "") +
-        fixCSVField(col.textContent.trim(), csvDelimiter);
+        data + (j ? csvDelimiter : "") + fixCSVField(String(col), csvDelimiter);
     }
     data = data + csvNewLine;
   }

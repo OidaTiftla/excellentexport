@@ -8,18 +8,15 @@
 
  - [:heart: Sponsor ExcellentExport.js project:heart:](https://github.com/sponsors/jmaister)
 
- - JavaScript export to Excel or CSV.
+ - JavaScript export to CSV.
 
- - A quick JavaScript library to create export to Excel/CSV from HTML tables in the browser. No server required.
-
- - As part of the new version 3.0.0+, there is support for _XLSX_. The drawback is that the library is 200+ KB.
-
- - Check My Blog Page for Testing :
-      [JavaScript export to Excel](http://jordiburgos.com/post/2013/javascript-export-to-excel.html)
-
-      [ExcellentExport.js update: JavaScript export to Excel and CSV](http://jordiburgos.com/post/2017/excellentexport-javascript-export-to-excel-csv.html)
+ - A quick JavaScript library to create export to CSV from HTML tables in the browser. No server required.
 
 # Revision history:
+
+### 4.0.0
+
+* Shrink to CSV support only (remove Excel support)
 
 ### 3.9.3
 
@@ -217,43 +214,33 @@
         </tr>
     </table>
 
-    <a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'datatable', 'Sheet Name Here');">Export to Excel</a>
-    <a download="somedata.csv" href="#" onclick="return ExcellentExport.csv(this, 'datatable');">Export to CSV</a>
-    <!-- new API, xlsx -->
-    <a download="somedata.xlsx" href="#" onclick="return ExcellentExport.convert({ anchor: this, filename: 'data_123.array', format: 'xlsx'},[{name: 'Sheet Name Here 1', from: {table: 'datatable'}}]);">Export to CSV</a>
+    <!-- new API -->
+    <a download="somedata.csv" href="#" onclick="return ExcellentExport.convert({ anchor: this, filename: 'data_123.array'},[{from: {table: 'datatable'}}]);">Export to CSV</a>
 
 # API
 
-     ExcellentExport.convert(options, sheets);
+    ExcellentExport.convert(options, sheet);
 
-     Options:
-     {
+    Options:
+    {
         anchor: String or HTML Element,
-        format: 'xlsx' or 'xls' or 'csv',
+        openAsDownload: boolean, // Use this options if not using an anchor tag
         filename: String,
-        rtl: Use Right-to-left characters, boolean (optional)
-     }
+    }
 
-     Sheets must be an array of sheet configuration objects. Sheet description:
-     [
-        {
-            name: 'Sheet 1', // Sheet name
-            from: {
-                table: String/Element, // Table ID or table element
-                array: [...] // Array with the data. Array where each element is a row. Every row is an array of the cells.
-            },
-            removeColumns: [...], // Array of column indexes (from 0)
-            filterRowFn: function(row) {return true}, // Function to decide which rows are returned
-            fixValue: function(value, row, column) {return fixedValue} // Function to fix values, receiving value, row num, column num
-            fixArray: function(array) {return array} // Function to manipulate the whole data array
-            rtl: Use Right-to-left characters, boolean (optional)
-            formats: [...] // Array of formats for each column. See formats below.
-            ...
+    Sheets must be an array of sheet configuration objects. Sheet description:
+    {
+        from: {
+            table: String/Element, // Table ID or table element
+            array: [...], // Array with the data. Array where each element is a row. Every row is an array of the cells.
         },
-        {
-            ...
-        }, ...
-    ]
+        removeColumns: [...], // Array of column indexes (from 0)
+        filterRowFn: function(row) {return true}, // Function to decide which rows are returned
+        fixValue: function(value, row, column) {return fixedValue}, // Function to fix values, receiving value, row num, column num
+        fixArray: function(array) {return array}, // Function to manipulate the whole data array
+        delimiter: ",", // String to separate columns
+        newLine: "\r\n", // String to separate rows
+    }
 
 ## fixValue example
 
@@ -265,61 +252,6 @@ It transforms BR to line breaks and then strips all the HTML tags.
                     let strippedString = v.replace(/(<([^>]+)>)/gi, "");
                     return strippedString;
                 }
-
-## Formats
-
-You can specify an array with the formats for a specific cell range (i.e. A1:A100, A1:D100, A1:H1, etc).
-
-Each element in the format array consists on:
-
-```json
-{
-    "range": "A1:A100", // Range of cells to apply the format, mandatory
-    "format": {
-        "type": "<cell_type>", // Type of format, mandatory
-        "pattern": "<pattern>" // Pattern, optional
-    }
-}
-```
-
-Example:
-
-```typescript
-          formats: [
-            {
-              range: "C2:C20",
-              format: {
-                type: "n",
-                pattern: "0.00",
-              },
-            },
-            {
-              range: "C2:C20",
-              format: ExcellentExport.formats.NUMBER,
-            }
-          ],
-
-```
-
-`format` can be used from one of the predefined types if you use TypeScript
-
-
-`cell_type` can be one of the followint:
-
-    's': String
-    'n': Number
-    'd': Date
-    'b': Boolean
-
-`pattern` is a string with the format pattern used in Excel. For example:
-
-    '0' // Integer
-    '0.00' // 2 decimals
-    'dd/mm/yyyy' // Date
-    'dd/mm/yyyy hh:mm:ss' // Date and time
-    '0.00%' // Percentage
-    '0.00e+00' // Scientific notation
-    '@' // Text
 
 # Notes
 

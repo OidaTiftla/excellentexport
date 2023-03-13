@@ -9,17 +9,15 @@
             }
         </style>
         <script>
-            function action(format) {
+            function action() {
                 return ExcellentExport.convert({
-                    anchor: 'bigdata-' + format,
-                    filename: 'big_table.' + format,
-                    format: format
-                }, [{
-                    name: 'Big Table',
+                    anchor: 'bigdata',
+                    filename: 'big_table.csv',
+                }, {
                     from: {
                         table: 'bigtable'
                     }
-                }]);
+                });
             }
         </script>
     </head>
@@ -31,9 +29,7 @@
         <h3>Big Table Test page</h3>
 
 
-        <a id="bigdata-xlsx" download="bigdata.xlsx" href="#" onclick="return action('xlsx')">Export to XLSX very big table</a><br/>
-        <a id="bigdata-xls"  download="bigdata.xls" href="#" onclick="return action('xls')">Export to XLS very big table</a><br/>
-        <a id="bigdata-csv"  download="bigdata.csv" href="#" onclick="return action('csv')">Export to CSV very big table</a>
+        <a id="bigdata"  download="bigdata.csv" href="#" onclick="return action()">Export to CSV very big table</a>
         <table id="bigtable">
         <br/>
         </table>

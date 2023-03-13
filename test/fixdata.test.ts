@@ -17,24 +17,20 @@ describe("Fix data", function () {
     const options = {
       anchor: "anchor",
       filename: "data_from_array",
-      format: "xlsx",
     } as ConvertOptions;
 
-    const sheets = [
-      {
-        name: "Sheet Name Here 1",
-        from: {
-          array: [["hello", "<td>hello</td>", "bye"]],
-        },
-        fixValue: (value, row, col) => {
-          let v = value.replace(/<br>/gi, "\n");
-          let strippedString = v.replace(/(<([^>]+)>)/gi, "");
-          return strippedString;
-        },
+    const sheet = {
+      from: {
+        array: [["hello", "<td>hello</td>", "bye"]],
       },
-    ];
+      fixValue: (value, row, col) => {
+        let v = value.replace(/<br>/gi, "\n");
+        let strippedString = v.replace(/(<([^>]+)>)/gi, "");
+        return strippedString;
+      },
+    };
 
-    const workbook = ExcellentExport.convert(options, sheets);
+    const workbook = ExcellentExport.convert(options, sheet);
     assert.ok(workbook, "Result must not be null");
   });
 
@@ -42,26 +38,22 @@ describe("Fix data", function () {
     const options = {
       anchor: "anchor",
       filename: "data_from_array",
-      format: "xlsx",
     } as ConvertOptions;
 
-    const sheets = [
-      {
-        name: "Sheet Name Here 1",
-        from: {
-          array: [["hello", "<td>hello</td>", "bye"]],
-        },
-        fixData: (array) => {
-          return array.map((r) => {
-            return r.map((v) => {
-              return "fixed-" + v;
-            });
-          });
-        },
+    const sheet = {
+      from: {
+        array: [["hello", "<td>hello</td>", "bye"]],
       },
-    ];
+      fixData: (array) => {
+        return array.map((r) => {
+          return r.map((v) => {
+            return "fixed-" + v;
+          });
+        });
+      },
+    };
 
-    const workbook = ExcellentExport.convert(options, sheets);
+    const workbook = ExcellentExport.convert(options, sheet);
     assert.ok(workbook, "Result must not be null");
   });
 });

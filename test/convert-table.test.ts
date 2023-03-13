@@ -19,23 +19,19 @@ describe("convert() API", function () {
       document.body.appendChild(element);
     });
 
-    test("should create a XLSX from HTML table by #id", function () {
+    test("should create a CSV from HTML table by #id", function () {
       const options = {
         anchor: "anchor",
         filename: "data_from_table",
-        format: "xlsx",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {
-            table: "sometable",
-          },
+      const sheet = {
+        from: {
+          table: "sometable",
         },
-      ] as SheetOptions[];
+      } as SheetOptions;
 
-      const workbook = ExcellentExport.convert(options, sheets);
+      const workbook = ExcellentExport.convert(options, sheet);
       expect(workbook).not.toBeNull();
 
       const anchor = document.getElementById("anchor") as HTMLAnchorElement;
@@ -43,23 +39,19 @@ describe("convert() API", function () {
       expect(anchor.href).toMatch(/blob:/);
     });
 
-    test("should create a XLSX from HTML table by DOM element", function () {
+    test("should create a CSV from HTML table by DOM element", function () {
       const options = {
         anchor: document.getElementById("anchor"),
         filename: "data_from_table",
-        format: "xlsx",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {
-            table: document.getElementById("sometable"),
-          },
+      const sheet = {
+        from: {
+          table: document.getElementById("sometable"),
         },
-      ] as SheetOptions[];
+      } as SheetOptions;
 
-      const workbook = ExcellentExport.convert(options, sheets);
+      const workbook = ExcellentExport.convert(options, sheet);
       expect(workbook).not.toBeNull();
 
       const anchor = document.getElementById("anchor") as HTMLAnchorElement;

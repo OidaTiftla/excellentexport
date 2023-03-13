@@ -12,7 +12,7 @@
 
 
 function triggerDownload() { 
-    ExcellentExport.convert({ filename: 'fileTriggeredAutomatically', format: 'xlsx', openAsDownload: true},[{name: 'Sheet 1', from: {array: [[1,2,3],[4,5,6]]}},{name: 'Sheet 2', from: {array: [['this is text'],['this is also text']]}}]);
+    ExcellentExport.convert({ filename: 'fileTriggeredAutomatically', openAsDownload: true},{from: {array: [[1,2,3],[4,5,6]]}});
 }
 
 document.addEventListener("DOMContentLoaded", triggerDownload);

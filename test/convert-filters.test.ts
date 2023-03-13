@@ -23,24 +23,20 @@ describe("convert() API", function () {
       const options = {
         anchor: "anchor",
         filename: "data_from_table",
-        format: "xlsx",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {
-            table: "sometable",
-          },
-          filterRowFn: (row) => {
-            if (row[0] === "first") {
-              return true;
-            }
-          },
+      const sheet = {
+        from: {
+          table: "sometable",
         },
-      ] as SheetOptions[];
+        filterRowFn: (row) => {
+          if (row[0] === "first") {
+            return true;
+          }
+        },
+      } as SheetOptions;
 
-      const workbook = ExcellentExport.convert(options, sheets);
+      const workbook = ExcellentExport.convert(options, sheet);
       expect(workbook).not.toBeNull();
     });
 
@@ -48,20 +44,16 @@ describe("convert() API", function () {
       const options = {
         anchor: "anchor",
         filename: "data_from_table",
-        format: "xlsx",
       } as ConvertOptions;
 
-      const sheets = [
-        {
-          name: "Sheet Name Here 1",
-          from: {
-            table: "sometable",
-          },
-          removeColumns: [1],
+      const sheet = {
+        from: {
+          table: "sometable",
         },
-      ] as SheetOptions[];
+        removeColumns: [1],
+      } as SheetOptions;
 
-      const workbook = ExcellentExport.convert(options, sheets);
+      const workbook = ExcellentExport.convert(options, sheet);
       expect(workbook).not.toBeNull();
     });
   });

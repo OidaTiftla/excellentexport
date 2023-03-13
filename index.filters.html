@@ -9,13 +9,11 @@
             }
         </style>
         <script>
-            function newApi(format) {
+            function newApi() {
                 return ExcellentExport.convert({
-                    anchor: 'anchorNewApi-' + format,
-                    filename: 'data_123.' + format,
-                    format: format
-                }, [{
-                    name: 'Sheet Name Here 1',
+                    anchor: 'anchorNewApi',
+                    filename: 'data_123.csv',
+                }, {
                     from: {
                         table: 'datatable'
                     },
@@ -24,7 +22,7 @@
                         let strippedString = v.replace(/(<([^>]+)>)/gi, "");
                         return strippedString;
                     }
-                }]);
+                });
             }
         </script>
     </head>
@@ -53,11 +51,7 @@
 
         <br/>
 
-        <a href="#" id="anchorNewApi-xlsx" onclick="return newApi('xlsx');">Export to XLSX from array</a>
-        <br>
-        <a href="#" id="anchorNewApi-xls" onclick="return newApi('xls');">Export to XLS from array</a>
-        <br>
-        <a href="#" id="anchorNewApi-csv" onclick="return newApi('csv');">Export to CSV from array</a>
+        <a href="#" id="anchorNewApi" onclick="return newApi();">Export to CSV from array</a>
 
     </body>
 </html>
