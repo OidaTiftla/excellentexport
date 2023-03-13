@@ -138,6 +138,7 @@ export const createDownloadLink = function (
     return false;
   } else if (window.URL.createObjectURL) {
     const blob = b64toBlob(base64data, exporttype);
+    anchor.download = filename;
     anchor.href = window.URL.createObjectURL(blob);
   } else {
     anchor.download = filename;
